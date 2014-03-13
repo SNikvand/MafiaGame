@@ -37,8 +37,7 @@ input[type=radio]:checked + img {
 }
 
 .mg-avatar {
-    margin-right: 5px;
-    margin-left: 5px;
+    margin: 5px;
 }
 
 .mg-avatar > input[type=radio] {
