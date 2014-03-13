@@ -1,8 +1,64 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* Bootstrap modifications */
+
+
+/* Non Bootstrap Code */
+
+.footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 100px;
+    color: #777;
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
 }
 
-a {
-  color: #00B7FF;
+input[type=radio] + img {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -moz-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -ms-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+input[type=radio]:checked + img {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(29, 130, 233, 0.60);;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(29, 130, 233, 0.60);
+}
+
+.mg-hr-dark {
+    border-top-color: #D3D3D3;
+}
+
+.mg-avatar {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.mg-avatar > input[type=radio] {
+    display: none;
+}
+
+.mg-center {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+}
+
+.mg-username {
+    width: 200px;
+}
+
+.mg-navbar-logo {
+    height: 80%;
+}
+
+.mg-homepage-margin {
+    margin-top: 50px;
 }
