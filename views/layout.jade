@@ -28,7 +28,7 @@ html
                         li
                             a(href='#about') About
                         li
-                            a(href='#contact') Contact
+                            a(href='#contact', data-toggle='modal', data-target='#rules') How To Play
 
         div.container
             block content
@@ -36,6 +36,8 @@ html
         div.footer
             div.container
                 |Created By BCIT CST Set 4Q - Wei's Mafia
+
+        include modals
 
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
         script(src='/javascripts/bootstrap.min.js')
