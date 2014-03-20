@@ -11,6 +11,7 @@ var path = require('path');
 
 var routes = require('./routes');
 var user = require('./routes/user');
+var game = require('./routes/game');
 
 //END PAGE ROUTES\\
 
@@ -35,6 +36,8 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.post('/game', game.index);
+app.get('/game', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
