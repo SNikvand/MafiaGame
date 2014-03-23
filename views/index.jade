@@ -1,83 +1,19 @@
 extends layout
 
 block content
-    form.row.mg-homepage-margin(role='form', action='/game', method='post')
+    form.row.mg-homepage-margin(role='form')
         div.jumbotron.col-md-8
             h3
                 | Please Select your Avatar
             hr.mg-hr-dark
-            label.mg-avatar
-                input(type='radio', name='avatar', value='1', checked)
-                img(src='/images/avatars/1.png')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='2')
-                img(src='/images/avatars/2.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='3')
-                img(src='/images/avatars/3.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='4')
-                img(src='/images/avatars/4.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='5')
-                img(src='/images/avatars/5.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='6')
-                img(src='/images/avatars/6.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='7')
-                img(src='/images/avatars/7.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='8')
-                img(src='/images/avatars/8.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='9')
-                img(src='/images/avatars/9.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='10')
-                img(src='/images/avatars/10.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='11')
-                img(src='/images/avatars/11.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='12')
-                img(src='/images/avatars/12.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='13')
-                img(src='/images/avatars/13.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='14')
-                img(src='/images/avatars/14.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='15')
-                img(src='/images/avatars/15.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='16')
-                img(src='/images/avatars/16.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='17')
-                img(src='/images/avatars/17.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='18')
-                img(src='/images/avatars/18.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='19')
-                img(src='/images/avatars/19.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='20')
-                img(src='/images/avatars/20.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='21')
-                img(src='/images/avatars/21.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='22')
-                img(src='/images/avatars/22.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='23')
-                img(src='/images/avatars/23.jpg')
-            label.mg-avatar
-                input(type='radio', name='avatar', value='24')
-                img(src='/images/avatars/24.jpg')
+            //Source: for the code below. Albert Wei (Thanks for the help!)
+            each val, index in files
+                label.mg-avatar
+                    if index == 0
+                        input(type='radio', name='avatar', value=index+1, checked)
+                    else
+                        input(type='radio', name='avatar', value=index+1)
+                    img(src='/images/avatars/' + val)
         div.col-md-4
             h3 Welcome to Wei's Mafia
             h4
@@ -86,5 +22,5 @@ block content
             div.form-group.mg-username
                 label.control-label(for='username') Username
                 div
-                    input.form-control(type='username', name='username',placeholder='JohnSmith')
+                    input.form-control(type='username', placeholder='JohnSmith')
             button.btn.btn-primary(type='submit') Let's Play
