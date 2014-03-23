@@ -1,4 +1,19 @@
 extends layout
 
 block content
-    p !{result.replace(/\n/g, '<br/>')}
+
+    div.col-lg-8
+        div.list-group(id='messages')
+            div.mg-item.list-group-item Username: this is a random chat message
+            div.mg-item.list-group-item Username: this is a random chat message
+        form.form(id='send-form', role='form')
+            div.form-group
+                label Chat:
+                input.form-control(type='text', id='send-message', placeholder='Type here to chat with other users.')
+            button.btn.btn-primary.mg-button-margin(type='submit') Send Message
+            a.btn.btn-default(href='#lobby', data-toggle='modal', data-target='#lobby') Game Lobbies
+    div.col-lg-4
+        div.list-group(id='user-list')
+            div.mg-item.list-group-item Shahin
+            div.mg-item.list-group-item Matt
+            div.mg-item.list-group-item Danny

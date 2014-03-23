@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    form.row.mg-homepage-margin(role='form')
+    form.row.mg-homepage-margin(role='form', action='/game', method='post')
         div.jumbotron.col-md-8
             h3
                 | Please Select your Avatar
@@ -22,5 +22,5 @@ block content
             div.form-group.mg-username
                 label.control-label(for='username') Username
                 div
-                    input.form-control(type='username', placeholder='JohnSmith')
+                    input.form-control(type='username', placeholder='JohnSmith', name='username')
             button.btn.btn-primary(type='submit') Let's Play
