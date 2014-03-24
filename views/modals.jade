@@ -22,11 +22,8 @@ div.modal.fade(id='lobby', tabindex='-1', role='dialog', aria-labelledby='lobby'
                 button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
                 h3.modal-title(id='lobby') Game Lobbies
             div.modal-body
-                div.list-group.mg-list-group-margin
-                    a.list-group-item(href='#') Room 1
-                    a.list-group-item(href='#') Room 2
-                    a.list-group-item(href='#') Room 3
-                    a.list-group-item(href='#') Room 4
+                //The JQuery Styling must be fixed. Items are inserted as Divs. we need <a> for proper styling
+                div.list-group.mg-list-group-margin(id='room-list')
             div.modal-footer.mg-modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') Close
                 button.btn.btn-primary(type='button', data-dismiss='modal') Join Game

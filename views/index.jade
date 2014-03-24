@@ -10,9 +10,9 @@ block content
             each val, index in files
                 label.mg-avatar
                     if index == 0
-                        input(type='radio', name='avatar', value=index+1, checked)
+                        input(type='radio', name='avatar', value=val, checked)
                     else
-                        input(type='radio', name='avatar', value=index+1)
+                        input(type='radio', name='avatar', value=val)
                     img(src='/images/avatars/' + val)
         div.col-md-4
             h3 Welcome to Wei's Mafia

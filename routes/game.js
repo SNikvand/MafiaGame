@@ -5,6 +5,9 @@
 exports.index = function(req, res) {
     var avatarNum = req.body.avatar;
     var Username = req.body.username;
-    var output = '' + Username + ' ' + avatarNum;
+    var output = {
+        name: Username,
+        avatar: avatarNum
+    }
     res.render('game', {result: output});
 };

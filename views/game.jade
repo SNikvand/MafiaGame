@@ -1,19 +1,21 @@
 extends layout
 
 block content
-
     div.col-lg-8
         div.list-group(id='messages')
-            div.mg-item.list-group-item Username: this is a random chat message
-            div.mg-item.list-group-item Username: this is a random chat message
         form.form(id='send-form', role='form')
             div.form-group
                 label Chat:
                 input.form-control(type='text', id='send-message', placeholder='Type here to chat with other users.')
-            button.btn.btn-primary.mg-button-margin(type='submit') Send Message
-            a.btn.btn-default(href='#lobby', data-toggle='modal', data-target='#lobby') Game Lobbies
+            input.btn.btn-primary.mg-button-margin(id='send-button', type='submit', value='Send Message')
+            a.btn.btn-default.mg-button-margin(href='#lobby', data-toggle='modal', data-target='#lobby') Game Lobbies
+            img.mg-button-margin(src='/images/avatars/#{result.avatar}')
+            span(id='username') #{result.name}
     div.col-lg-4
         div.list-group(id='user-list')
             div.mg-item.list-group-item Shahin
             div.mg-item.list-group-item Matt
             div.mg-item.list-group-item Danny
+    script(src='/javascripts/socket.io.js')
+    script(src='/javascripts/chat.js')
+    script(src='/javascripts/chat_ui.js')

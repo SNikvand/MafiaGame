@@ -39,6 +39,9 @@ app.get('/users', user.list);
 app.post('/game', game.index);
 app.get('/game', routes.index);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+var chatserver = require('./lib/chat_server');
+chatserver.listen(server);
