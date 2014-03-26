@@ -14,8 +14,11 @@ var user = require('./routes/user');
 var game = require('./routes/game');
 
 //END PAGE ROUTES\\
+var redis = require('redis');
+client = redis.createClient();
 
 var app = express();
+dbaccess = require('./lib/dbaccess');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
