@@ -20,6 +20,7 @@ function validateName(username) {
             return -1;
         }
     }
+    return 0;
 }
 
 exports.index = function(req, res) {
