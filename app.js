@@ -14,11 +14,15 @@ var user = require('./routes/user');
 var game = require('./routes/game');
 
 //END PAGE ROUTES\\
-var redis = require('redis');
-client = redis.createClient();
+
+///~!~!~ ENABLE REDIS IF YOU NEED DB SUPPORT - MUST HAVE REDIS RUNNING ~!~!~\\\
+//var redis = require('redis');
+//client = redis.createClient();
+//dbaccess = require('./lib/dbaccess');
+///~!~!~ ENABLE REDIS IF YOU NEED DB SUPPORT - MUST HAVE REDIS RUNNING ~!~!~\\\
 
 var app = express();
-dbaccess = require('./lib/dbaccess');
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
