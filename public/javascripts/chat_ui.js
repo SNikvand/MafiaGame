@@ -118,4 +118,19 @@ $(document).ready(function() {
         processUserInput(chatApp, socket);
         return false;
     });
+
+    $('#createroom-btn').click(function()
+    {
+        var name = $('#room-name').val();
+        var size = $('#room-size').val();
+
+        if(name.length > 3 && name.length < 16){
+            chatApp.processCommand('/join ' + name);
+            $('#err-roomname').text('Good!');
+            $('#send-message').focus();
+        }
+        else{
+            $('#err-roomname').text('Must have 4-16 characters');
+        }
+    });
 });
