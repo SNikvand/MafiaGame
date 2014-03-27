@@ -50,5 +50,5 @@ var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var chatserver = require('./lib/chat_server');
-chatserver.listen(server);
+var game_server = require('./lib/game_server');
+game_server.listen(server);
