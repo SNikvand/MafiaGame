@@ -38,12 +38,11 @@ function processUserInput(chatApp, socket) {
             $('#messages').append(divSystemContentElement(systemMessage));
         }
     } else {
-        chatApp.sendMessage($('#room').text(), message);
+        chatApp.sendMessage($('#address').text(), message);
+        //console.log("address: " + $('#address').text());
         message = stylizeUsername(safe_tags_replace($('#username').val())) + ': ' + safe_tags_replace(message);
         $('#messages').append(divContentElement(message));
         $('#messages').scrollTop($('#messages').prop('scrollHeight'));
-
-
     }
 
     $('#send-message').val('');
@@ -69,6 +68,7 @@ $(document).ready(function() {
     });
 
     socket.on('joinResult', function(result) {
+        $('#address').text(result.address);
         $('#room').html('You are currently in:&nbsp;<b>' + result.room + '</b>');
         $('#messages').append(divSystemContentElement('Room changed.'));
     });
