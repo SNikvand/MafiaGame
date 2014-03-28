@@ -31,8 +31,6 @@ exports.index = function(req, res) {
         res.redirect('#');
     }
 
-    dbaccess.createUserDatabase(Username, req.body.socket.id, avatarNum);
-
     var output = {
         name: Username,
         avatar: avatarNum
