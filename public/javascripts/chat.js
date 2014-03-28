@@ -10,7 +10,7 @@ Chat.prototype.sendMessage = function(room, text) {
     this.socket.emit('message', message);
 };
 
-/*Chat.prototype.processCommand = function(command) {
+Chat.prototype.processCommand = function(command) {
     var words = command.split(' ');
     var command = words[0]
         .substring(1, words[0].length)
@@ -40,7 +40,7 @@ Chat.prototype.changeRoom = function(room) {
     this.socket.emit('join', {
         newRoom: room
     });
-};*/
+};
 
 Chat.prototype.createRoom = function(room, size) {
     this.socket.emit('createGame', {newRoom: room, newSize: size})
