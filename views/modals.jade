@@ -39,9 +39,10 @@ div.modal.fade(id='createroom', tabindex='-1', role='dialog', aria-labelledby='c
                 div.form-group(id='createroom-form')
                     | Name:
                     span(id='err-roomname')
-                    input.form-control(type='text', id='room-name')
+                    input.form-control(type='text', id='create-room-name', data-toggle='popover', data-placement='top',
+                        data-content='Hello World', data-trigger='manual')
                     | Max Players:
-                    select.form-control(id='room-size')
+                    select.form-control(id='create-room-size')
                         option 2
                         option 4
                         option 6

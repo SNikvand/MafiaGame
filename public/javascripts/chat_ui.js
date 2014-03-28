@@ -119,18 +119,20 @@ $(document).ready(function() {
         return false;
     });
 
+    /*
+    CREATE ROOM HAS NO BACK END VALIDATION! PLEASE CREATE ONE!
+     */
     $('#createroom-btn').click(function()
     {
-        var name = $('#room-name').val();
-        var size = $('#room-size').val();
+        var name = $('#create-room-name').val();
+        var size = $('#create-room-size').val();
 
-        if(name.length > 3 && name.length < 16){
+        if(name.length > 2 && name.length < 16){
             chatApp.processCommand('/join ' + name);
             $('#err-roomname').text('Good!');
             $('#send-message').focus();
-        }
-        else{
-            $('#err-roomname').text('Must have 4-16 characters');
+            $('#lobby').modal('hide');
+            $('#createroom').modal('hide');
         }
     });
 });
