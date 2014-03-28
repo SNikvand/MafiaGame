@@ -13,13 +13,13 @@ function validateName(username) {
         return -1;
     }
 
-    for (var i = 0; i < username.length; i++) {
-        var char1 = username.charAt(i);
-        var cc = char1.charCodeAt(0);
-        if (!((cc > 47 && cc < 58) || (cc > 64 && cc < 91) || (cc > 96 && cc < 123))) {
-            return -1;
-        }
+    var validName = new RegExp(/^[a-z0-9]+$/i);
+    var isValid = validName.test(username);
+    console.log(isValid);
+    if(!isValid) {
+        return -1;
     }
+
     return 0;
 }
 
