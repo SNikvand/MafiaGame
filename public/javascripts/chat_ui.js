@@ -29,7 +29,8 @@ function stylizeUsername(message) {
 }
 
 function processUserInput(chatApp, socket) {
-    var message = $('#send-message').val();
+    var messageBox = $('#send-message');
+    var message = messageBox.val();
     var systemMessage;
 
     if(message.charAt(0) == '/') {
@@ -40,13 +41,14 @@ function processUserInput(chatApp, socket) {
     } else {
         chatApp.sendMessage($('#room').text(), message);
         message = stylizeUsername(safe_tags_replace($('#username').val())) + ': ' + safe_tags_replace(message);
-        $('#messages').append(divContentElement(message));
-        $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+        var messagesArea = $('#messages');
+        messagesArea.append(divContentElement(message));
+        messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
 
     }
 
-    $('#send-message').val('');
+    messageBox.val('');
 }
 
 var socket = io.connect();
@@ -73,22 +75,24 @@ $(document).ready(function() {
     });
 
     socket.on('message', function (message) {
+        var messagesArea = $('#messages');
         var newElement = $('<div class="mg-item list-group-item"></div>').text(message.text);
-        $('#messages').append(newElement);
-        $('#messages').scrollTop($('#messages').prop('scrollHeight'));
+        messagesArea.append(newElement);
+        messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
     });
 
     socket.on('rooms', function(rooms) {
-        $('#room-list').empty();
+        var roomList = $('#room-list');
+        roomList.empty();
 
         for(var room in rooms) {
             room = room.substring(1, room.length);
             if(room != '') {
-                $('#room-list').append(divEscapedContentElement(room));
+                roomList.append(divEscapedContentElement(room));
             }
         }
 
-        $('#room-list div').click(function() {
+        $(roomList > 'div').click(function() {
             chatApp.processCommand('/join ' + $(this).text());
             $('#send-message').focus();
         });
@@ -98,11 +102,12 @@ $(document).ready(function() {
     I suspect listing the users should be something along these lines. More or less complex.
      */
     socket.on('users', function(data) {
-        $('#user-list').empty();
+        var userList = $('#user-list');
+        userList.empty();
 
         for(var user in data) {
             if(user != '') {
-                $('#user-list').append(divEscapedContentElement(user));
+                userList.append(divEscapedContentElement(user));
             }
         }
     });
