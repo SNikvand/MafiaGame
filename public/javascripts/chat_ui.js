@@ -54,6 +54,7 @@ var socket = io.connect();
 $(document).ready(function() {
     var chatApp = new Chat(socket);
     socket.emit('nameAttempt', $('#username').text());
+    socket.emit('createUser', $('#username').text(), $('#avatar').prop('src'));
 
     socket.on('nameResult', function(result) {
         var message;
@@ -68,7 +69,7 @@ $(document).ready(function() {
     });
 
     socket.on('joinResult', function(result) {
-        $('#room').text(result.room);
+        $('#room').html('You are currently in:&nbsp;<b>' + result.room + '</b>');
         $('#messages').append(divSystemContentElement('Room changed.'));
     });
 
@@ -101,9 +102,12 @@ $(document).ready(function() {
     socket.on('users', function(data) {
         $('#user-list').empty();
 
+        // for the time being, this only prints the usernames
+        // once the database implementation is complete, the server can send over the avatar urls to display
+        // along with these nicknames
         for(var user in data) {
             if(user != '') {
-                $('#user-list').append(divEscapedContentElement(user));
+                $('#user-list').append(divContentElement(data[user]));
             }
         }
     });
