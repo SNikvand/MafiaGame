@@ -66,8 +66,7 @@ var socket = io.connect();
 $(document).ready(function() {
     var chatApp = new Chat(socket);
     socket.emit('rooms'); // put one after user clicks cancel or join too
-    socket.emit('nameAttempt', $('#username').text());
-    socket.emit('createUser', $('#username').text(), $('#avatar').prop('src'));
+    socket.emit('nameAttempt', $('#username').text(), $('#avatar').prop('src'));
 
     socket.on('nameResult', function(result) {
         var message;
@@ -117,15 +116,19 @@ $(document).ready(function() {
     /*
     I suspect listing the users should be something along these lines. More or less complex.
      */
-    socket.on('users', function(data) {
+    socket.on('users', function(sockarray, namearray, avatararray) {
         $('#user-list').empty();
 
         // for the time being, this only prints the usernames
         // once the database implementation is complete, the server can send over the avatar urls to display
         // along with these nicknames
-        for(var user in data) {
-            if(user != '') {
-                $('#user-list').append(divContentElement(data[user]));
+        for(var userid in sockarray) {
+            if(userid != '') {
+
+                console.log("user id: " + sockarray[userid]);
+
+                $('#user-list').append(divContentElement('<img src="' + avatararray[sockarray[userid]] + '" />&nbsp;&nbsp;&nbsp;' +
+                    namearray[sockarray[userid]]));
             }
         }
     });
