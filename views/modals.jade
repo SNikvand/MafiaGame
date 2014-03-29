@@ -25,8 +25,8 @@ div.modal.fade(id='lobby', tabindex='-1', role='dialog', aria-labelledby='lobby'
                 //The JQuery Styling must be fixed. Items are inserted as Divs. we need <a> for proper styling
                 div.list-group.mg-list-group-margin(id='room-list')
             div.modal-footer.mg-modal-footer
-                button.btn.btn-default(type='button', data-dismiss='modal') Close
-                button.btn.btn-primary(type='button', data-dismiss='modal') Join Game
+                button.btn.btn-default(type='submit', id='close-btn' data-dismiss='modal') Close
+                button.btn.btn-primary(type='submit', id='joinroom-btn') Join Game
                 button.btn.btn-success(type='button', data-toggle='modal', href='#createroom') Create Room
 
 div.modal.fade(id='createroom', tabindex='-1', role='dialog', aria-labelledby='createroom', aria-hidden='true')
@@ -39,10 +39,9 @@ div.modal.fade(id='createroom', tabindex='-1', role='dialog', aria-labelledby='c
                 div.form-group(id='createroom-form')
                     | Name:
                     span(id='err-roomname')
-                    input.form-control(type='text', id='create-room-name', data-toggle='popover', data-placement='top',
-                        data-content='Hello World', data-trigger='manual')
+                    input.form-control(type='text', id='room-name')
                     | Max Players:
-                    select.form-control(id='create-room-size')
+                    select.form-control(id='room-size')
                         option 2
                         option 4
                         option 6
