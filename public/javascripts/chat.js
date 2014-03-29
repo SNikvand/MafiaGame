@@ -42,6 +42,10 @@ Chat.prototype.changeRoom = function(room) {
     });
 };
 
+Chat.prototype.joinRoom = function(hostid) {
+    this.socket.emit('joinGame', hostid);
+}
+
 Chat.prototype.createRoom = function(room, size) {
     this.socket.emit('createGame', {newRoom: room, newSize: size})
 };

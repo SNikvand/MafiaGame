@@ -10,7 +10,7 @@ block content
                 label Chat:
                 input.form-control(type='text', id='send-message', placeholder='Type here to chat with other users.')
             input.btn.btn-primary.mg-button-margin(id='send-button', type='submit', value='Send Message')
-            a.btn.btn-default.mg-button-margin(href='#lobby', data-toggle='modal', data-target='#lobby') Game Lobbies
+            a.btn.btn-default.mg-button-margin(href='#lobby', data-toggle='modal', data-target='#lobby' onclick='resetRoomList();') Game Lobbies
             img.mg-button-margin(id='avatar', src='/images/avatars/#{result.avatar}')
             span(id='username') #{result.name}
     div.col-lg-4
