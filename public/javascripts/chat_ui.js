@@ -1,5 +1,13 @@
 function divEscapedContentElement(message) {
-    return $('<div class="mg-item list-group-item"></div>').text(message);
+    return $('<div class="mg-item list-group-item selectroom" onclick="roomSelected($(this).text(), $(this));"></div>').html(message);
+}
+
+var currentRoomSelected = null;
+
+function roomSelected(e, thisElem) {
+    $('.selectroom').css('background-color', '#f9f9f9');
+    thisElem.css('background-color', '#dddddd');
+    currentRoomSelected = e;
 }
 
 var tagsToReplace = {
@@ -48,10 +56,16 @@ function processUserInput(chatApp, socket) {
     $('#send-message').val('');
 }
 
+function resetRoomList() {
+    currentRoomSelected = null;
+    socket.emit('rooms');
+}
+
 var socket = io.connect();
 
 $(document).ready(function() {
     var chatApp = new Chat(socket);
+    socket.emit('rooms'); // put one after user clicks cancel or join too
     socket.emit('nameAttempt', $('#username').text());
     socket.emit('createUser', $('#username').text(), $('#avatar').prop('src'));
 
@@ -79,14 +93,18 @@ $(document).ready(function() {
         $('#messages').scrollTop($('#messages').prop('scrollHeight'));
     });
 
-    socket.on('rooms', function(hostarray, namearray) {
+    socket.on('rooms', function(hostarray, namearray, nicknamearray) {
         $('#room-list').empty();
 
         for(var hostid in hostarray) {
             hostid = hostid.substring(1, hostid.length);
-            if(hostid != '') {
-               $('#room-list').append(divEscapedContentElement(namearray[hostid] + ' ' +
-                   hostid));
+            if (hostid != '') {
+                if (hostid == '-1') {
+                    $('#room-list').append(divEscapedContentElement(namearray[hostid] + ' <span style="display: none;">' + hostid + '</span>'));
+                } else {
+                    $('#room-list').append(divEscapedContentElement(namearray[hostid] + ' (host: ' +
+                        nicknamearray[hostid] + ') <span style="display: none;">' + hostid + '</span>'));
+                }
             }
         }
 
@@ -113,7 +131,6 @@ $(document).ready(function() {
     });
 
     setInterval(function() {
-       socket.emit('rooms');
        socket.emit('users');
     }, 1000);
 
@@ -122,6 +139,23 @@ $(document).ready(function() {
     $('#send-form').submit(function() {
         processUserInput(chatApp, socket);
         return false;
+    });
+
+    $('#closeroom-btn').click(function() {
+        resetRoomList();
+    });
+
+    $('#joinroom-btn').click(function() {
+        if (currentRoomSelected == null) {
+            alert('Must select a room to join');
+        } else {
+            var roomInfoArray = currentRoomSelected.split(" ");
+            var hostid = roomInfoArray[roomInfoArray.length-1];
+            chatApp.joinRoom(hostid);
+
+            $('#lobby').modal('hide');
+            resetRoomList();
+        }
     });
 
     $('#createroom-btn').click(function()
@@ -133,6 +167,10 @@ $(document).ready(function() {
             chatApp.createRoom(name, size);
             $('#err-roomname').text('Good!');
             $('#send-message').focus();
+
+            $('#lobby').modal('hide');
+            $('#createroom').modal('hide');
+            resetRoomList();
         }
         else{
             $('#err-roomname').text('Must have 4-16 characters');
