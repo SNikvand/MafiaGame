@@ -26,6 +26,18 @@ $('#create-room-name').keyup(
 );
 
 var toolTip = 0;
+ /*--------------------------------------------------------------------------------
+ Purpose: Ensures your name is more than 3 characters and less than 15.
+ Only characters allowed, aA-zZ and 0-9.
+ If error in name displays a tooltip.
+
+ Created by:
+ Data / Modified: March 28th 2014
+
+ Version: 1
+
+ Peer Reviewed By: Shahin
+ -------------------------------------------------------------------------------*/
 function validationTooltip(item) {
     var text = item.val();
     var message = '';
