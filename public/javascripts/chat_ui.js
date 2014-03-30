@@ -133,9 +133,13 @@ $(document).ready(function() {
         }
     });
 
-    setInterval(function() {
+    socket.on('updateUserList', function() {
        socket.emit('users');
-    }, 1000);
+    });
+
+    /*setInterval(function() {
+       socket.emit('users');
+    }, 1000);*/
 
     $('#send-message').focus();
 
