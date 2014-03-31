@@ -42,11 +42,30 @@ div.modal.fade(id='createroom', tabindex='-1', role='dialog', aria-labelledby='c
                     input.form-control(type='text', id='room-name')
                     | Max Players:
                     select.form-control(id='room-size')
-                        option 2
-                        option 4
                         option 6
-                        option 8
-                        option 10
+                        option 12
+                        option 18
+                        option 36
             div.modal-footer.mg-modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') Close
-                button.btn.btn-success(type='submit', id='createroom-btn') Create
+                button.btn.btn-primary(type='submit', id='createroom-btn') Create
+
+div.modal.fade(id='leaveroom', tabindex='-1', role='dialog', aria-labelledby='leave', aria-hidden='true')
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                h3.modal-title(id='leave') Are you sure you want to return to Lobby?
+            div.modal-footer.mg-modal-footer
+                button.btn.btn-default(type='submit', id='leaveroom-btn-yes', data-dismiss='modal') Yes
+                button.btn.btn-primary(type='submit', data-dismiss='modal') No
+
+div.modal.fade(id='leavegame', tabindex='-1', role='dialog', aria-labelledby='leave', aria-hidden='true')
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                h3.modal-title(id='leave') Are you sure you want to leave the game?
+            div.modal-footer.mg-modal-footer
+                button.btn.btn-default(type='submit', id='leavegame-btn-yes', data-dismiss='modal') Yes
+                button.btn.btn-primary(type='submit', data-dismiss='modal') No
