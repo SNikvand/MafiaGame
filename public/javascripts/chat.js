@@ -49,3 +49,7 @@ Chat.prototype.joinRoom = function(hostid) {
 Chat.prototype.createRoom = function(room, size) {
     this.socket.emit('createGame', {newRoom: room, newSize: size})
 };
+
+Chat.prototype.startGame = function() {
+    this.socket.emit('startGame');
+}
