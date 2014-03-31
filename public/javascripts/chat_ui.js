@@ -1,4 +1,16 @@
-function divEscapedContentElement(message) {
+// minimum required number of players for a game
+var currMinConn = null;
+
+// current number of players in room
+var currPlayers = 0;
+
+// current room host socket id
+var currHostId = null;
+
+// current player (client) socket id
+var currSockId = null;
+
+function divRoomItem(message) {
     return $('<div class="mg-item list-group-item selectroom" onclick="roomSelected($(this).text(), $(this));"></div>').html(message);
 }
 
@@ -65,6 +77,17 @@ var socket = io.connect();
 
 $(document).ready(function() {
     var chatApp = new Chat(socket);
+
+    socket.emit('getMinPlayers');
+    socket.on('getMinPlayers', function(minPlayers){
+        currMinConn = minPlayers;
+    });
+
+    socket.emit('getSocketId');
+    socket.on('getSocketId', function(sid) {
+        currSockId = sid;
+    });
+
     socket.emit('rooms'); // put one after user clicks cancel or join too
     socket.emit('nameAttempt', $('#username').text(), $('#avatar').prop('src'));
 
@@ -83,7 +106,7 @@ $(document).ready(function() {
     socket.on('joinResult', function(result) {
         $('#address').text(result.address);
         $('#room').html('You are currently in:&nbsp;<b>' + result.room + '</b>');
-        $('#messages').append(divSystemContentElement('Room changed.'));
+        $('#messages').append(divSystemContentElement('Room changed to ' + result.room + '.'));
     });
 
     socket.on('message', function (message) {
@@ -95,15 +118,13 @@ $(document).ready(function() {
     socket.on('rooms', function(hostarray, namearray, nicknamearray) {
         $('#room-list').empty();
 
+        $('#room-list').append(divRoomItem('Lobby <span style="display: none;">-1</span>'));
+
         for(var hostid in hostarray) {
             hostid = hostid.substring(1, hostid.length);
-            if (hostid != '') {
-                if (hostid == '-1') {
-                    $('#room-list').append(divEscapedContentElement(namearray[hostid] + ' <span style="display: none;">' + hostid + '</span>'));
-                } else {
-                    $('#room-list').append(divEscapedContentElement(namearray[hostid] + ' (host: ' +
-                        nicknamearray[hostid] + ') <span style="display: none;">' + hostid + '</span>'));
-                }
+            if (hostid != '' && hostid != -1) {
+                $('#room-list').append(divRoomItem(namearray[hostid] + ' (host: ' +
+                    nicknamearray[hostid] + ') <span style="display: none;">' + hostid + '</span>'));
             }
         }
 
@@ -114,14 +135,13 @@ $(document).ready(function() {
     });
 
     /*
-    I suspect listing the users should be something along these lines. More or less complex.
+     I suspect listing the users should be something along these lines. More or less complex.
      */
     socket.on('users', function(sockarray, namearray, avatararray) {
         $('#user-list').empty();
 
-        // for the time being, this only prints the usernames
-        // once the database implementation is complete, the server can send over the avatar urls to display
-        // along with these nicknames
+        currPlayers = sockarray.length;
+
         for(var userid in sockarray) {
             if(userid != '') {
 
@@ -133,13 +153,29 @@ $(document).ready(function() {
         }
     });
 
-    socket.on('updateUserList', function() {
-       socket.emit('users');
+    socket.on('updateRoomInfo', function(hostid) {
+        currHostId = hostid;
+        socket.emit('users');
+
+        if(hostid == -1) {
+            $('#leaveroom-btn').css('display', 'none');
+            $('#leavegame-btn').css('display', 'none');
+        } else {
+            $('#leaveroom-btn').css('display', 'inline');
+        }
     });
 
-    /*setInterval(function() {
-       socket.emit('users');
-    }, 1000);*/
+    // client-side in-game functionality goes here !!!
+    socket.on('beginGame', function() {
+        $('#startgame-btn').css('display', 'none');
+        $('#leaveroom-btn').css('display', 'none');
+        $('#leavegame-btn').css('display', 'inline');
+    });
+
+    socket.on('destroyRoom', function() {
+        alert('The host has left the game.');
+        chatApp.joinRoom(-1);
+    });
 
     $('#send-message').focus();
 
@@ -162,6 +198,11 @@ $(document).ready(function() {
 
             $('#lobby').modal('hide');
             resetRoomList();
+
+            // if this player is the room host, kick everybody out
+            if (currSockId == currHostId) {
+                socket.emit('destroyRoom');
+            }
         }
     });
 
@@ -183,4 +224,43 @@ $(document).ready(function() {
             $('#err-roomname').text('Must have 4-16 characters');
         }
     });
+
+    $('#startgame-btn').click(function() {
+        chatApp.startGame();
+    });
+    $('#leaveroom-btn-yes').click(function() {
+        chatApp.joinRoom(-1);
+        resetRoomList();
+
+        // if this player is the room host, kick everybody out
+        if (currSockId == currHostId) {
+            socket.emit('destroyRoom');
+        }
+    });
+    // when user leaves during a game in progress, the appropriate in-game logic should apply (discarded vote, dead, etc.)
+    // same goes for disconnection during a game--the logic itself should probably be implemented in a new function
+    // if a host leaves, the game presumably ends
+    $('#leavegame-btn-yes').click(function() {
+        chatApp.joinRoom(-1);
+        resetRoomList();
+
+        // if this player is the room host, kick everybody out
+        if (currSockId == currHostId) {
+            socket.emit('destroyRoom');
+        }
+    });
+
+    setInterval(function() {
+        console.log('current minimum: ' + currMinConn);
+        console.log('currrent number of players: ' + currPlayers);
+
+        if(currHostId != -1 && currSockId == currHostId) {
+            if(currPlayers < currMinConn || currMinConn == null) {
+                $('#startgame-btn').css('display', 'none');
+            } else {
+                $('#startgame-btn').css('display', 'inline');
+            }
+        }
+    }, 1000);
+
 });
