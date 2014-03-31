@@ -8,13 +8,18 @@ block content
         form.form(id='send-form', role='form')
             div.form-group
                 label Chat:
-                input.form-control(type='text', id='send-message', placeholder='Type here to chat with other users.')
+                input.form-control(type='text', id='send-message', placeholder='Type here to chat with other users.', required)
             input.btn.btn-primary.mg-button-margin(id='send-button', type='submit', value='Send Message')
             a.btn.btn-default.mg-button-margin(href='#lobby', data-toggle='modal', data-target='#lobby' onclick='resetRoomList();') Game Lobbies
             img.mg-button-margin(id='avatar', src='/images/avatars/#{result.avatar}')
             span(id='username') #{result.name}
     div.col-lg-4
         div.list-group(id='user-list')
+        form.form(id='send-form', role='form')
+            div.form-group
+            a.btn.btn-default.mg-button-margin(id='startgame-btn', style='display: none;') Start Game
+            a.btn.btn-default.mg-button-margin(id='leaveroom-btn', href='#leaveroom', data-toggle='modal', data-target='#leaveroom', style='display: none;') Leave Room
+            a.btn.btn-default.mg-button-margin(id='leavegame-btn', href='#leavegame', data-toggle='modal', data-target='#leavegame', style='display: none;') Leave Game
     script(src='/javascripts/socket.io.js')
     script(src='/javascripts/chat.js')
     script(src='/javascripts/chat_ui.js')
